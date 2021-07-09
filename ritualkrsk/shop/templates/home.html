@@ -1,0 +1,69 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+
+
+		<!--
+		<div class="row banners">
+		    <div class="col-md-4">
+			    <div class="banner">
+					<h2>Free delivery</h2>
+				</div>
+			</div>
+
+		    <div class="col-md-4">
+			    <div class="banner">
+				</div>
+			</div>
+
+
+		    <div class="col-md-4">
+			    <div class="banner">
+				</div>
+			</div>
+		</div>
+		-->
+
+
+		<div class="row">
+		    <div class="col-md-3 left-menu">
+				<div class="">
+					{% for category in categories %}
+					<h3>{{ category.category_name }}</h3>
+					<ul>
+						{% for subcategory in category.productsubcategory_set.all %}
+						<li><a href="">{{ subcategory }}</a></li>
+						{% endfor %}
+					</ul>
+					{% endfor %}
+				</div>
+
+
+
+			</div>
+
+		<div class="col-md-9">
+
+		<div class="row">
+		    {% for product in products %}
+			<div class="col-md-4">
+			    <div class="product">
+				    <a href="product.html"><img alt="dress1home" src=""></a>
+					<div class="name">
+				    <a href="product.html">{{ product.name }}</a>
+				    </div>
+				    <div class="price">
+				    <p>1000 р</p>
+				    </div>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+		</div>
+
+	   </div>
+	 </div>
+	</div>
+{% endblock %}

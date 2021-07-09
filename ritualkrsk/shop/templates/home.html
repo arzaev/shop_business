@@ -50,7 +50,7 @@
 		    {% for product in products %}
 			<div class="col-md-4">
 			    <div class="product">
-				    <a href="product.html"><img alt="dress1home" src=""></a>
+				    <a href="product.html"><img alt="dress1home" src="{{ product.main_image.url }}" width="200" height="200"></a>
 					<div class="name">
 				    <a href="product.html">{{ product.name }}</a>
 				    </div>

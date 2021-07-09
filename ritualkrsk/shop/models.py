@@ -3,6 +3,7 @@ from django.db import models
 
 class Product(models.Model):
     name = models.CharField(max_length=200)
+    main_image = models.ImageField(null=True, blank=True, upload_to="images/")
     pub_date = models.DateTimeField('date published')
 
     def __str__(self):

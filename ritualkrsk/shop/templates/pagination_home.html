@@ -1,0 +1,284 @@
+<nav>
+    {% if is_subcategory %}
+        <ul class="pagination pagination-sm">
+
+        {% if pages.has_previous %}
+
+            <li class="page-item">
+                <a class="page-link" href="{% url 'subcategory_pages' subcategory_slug 'page'  pages.previous_page_number  %}" tabindex="-1" aria-label="Previous">
+                    <span aria-hidden="true">
+                        <i class="fa fa-angle-double-left"></i>
+                    </span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+
+			{% endif %}
+		{% if pages.paginator.page_range|slice:"-1"|last >= 3 %}
+			{% if pages.number >= pages.paginator.page_range|slice:"4"|last %}
+
+				<li class="page-item">
+					<a class="page-link" href="{% url 'subcategory_pages' subcategory_slug 'page'  pages.paginator.page_range|slice:"1"|last  %}">{{ pages.paginator.page_range|slice:"1"|last }}</a>
+				</li>
+
+				<li class="page-item">
+					<div class="" href="">...</div>
+				</li>
+
+			{% endif %}
+		{% endif %}
+
+        {% for num in pages.paginator.page_range %}
+
+            {% if pages.number == num %}
+
+
+            <li class="page-item active">
+                <a class="page-link" href="{% url 'subcategory_pages' subcategory_slug 'page'  num  %}">{{ num }}</a>
+            </li>
+
+            {% elif num > pages.number|add:'-3' and num < pages.number|add:'3' %}
+
+            <li class="page-item">
+                <a class="page-link" href="{% url 'subcategory_pages' subcategory_slug 'page'  num  %}">{{ num }}</a>
+            </li>
+
+            {% endif %}
+
+        {% endfor %}
+
+		{% if pages.paginator.page_range|slice:"-1"|last >= 3 %}
+			{% if pages.number == pages.paginator.page_range|last %}
+
+			{% elif pages.number == pages.paginator.page_range|slice:"-1"|last %}
+			{% elif pages.number == pages.paginator.page_range|slice:"-2"|last %}
+
+			{% elif pages.number == pages.paginator.page_range|slice:"-3"|last %}
+
+				<li class="page-item">
+					<a class="page-link" href="{% url 'subcategory_pages' subcategory_slug 'page'  pages.paginator.page_range|last  %}">{{ pages.paginator.page_range|last }}</a>
+				</li>
+
+			{% else %}
+
+				<li class="page-item">
+					<div class="" href="">...</div>
+				</li>
+
+				<li class="page-item">
+					<a class="page-link" href="{% url 'subcategory_pages' subcategory_slug 'page'  pages.paginator.page_range|slice:"-2"|last  %}">{{ pages.paginator.page_range|slice:"-1"|last }}</a>
+				</li>
+
+				<li class="page-item">
+					<a class="page-link" href="{% url 'subcategory_pages' subcategory_slug 'page'  pages.paginator.page_range|last  %}">{{ pages.paginator.page_range|last }}</a>
+				</li>
+
+			{% endif %}
+		{% endif %}
+
+        {% if pages.has_next %}
+
+            <li class="page-item">
+                <a class="page-link" href="{% url 'subcategory_pages' subcategory_slug 'page'  pages.next_page_number  %}" aria-label="Next">
+                    <span aria-hidden="true">
+                        <i class="fa fa-angle-double-right"></i>
+                    </span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+
+        {% endif %}
+            </ul>
+                            </nav>
+
+
+
+		{# if tag #}
+		{% elif is_tag %}
+
+
+        {% if pages.has_previous %}
+
+            <li class="page-item">
+                <a class="page-link" href="{% url 'tag_pages' 'tag' tag_slug 'page'  pages.previous_page_number  %}" tabindex="-1" aria-label="Previous">
+                    <span aria-hidden="true">
+                        <i class="fa fa-angle-double-left"></i>
+                    </span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+
+			{% endif %}
+		{% if pages.paginator.page_range|slice:"-1"|last >= 3 %}
+			{% if pages.number >= pages.paginator.page_range|slice:"4"|last %}
+
+				<li class="page-item">
+					<a class="page-link" href="{% url 'tag_pages' 'tag' tag_slug 'page'  pages.paginator.page_range|slice:"1"|last  %}">{{ pages.paginator.page_range|slice:"1"|last }}</a>
+				</li>
+
+				<li class="page-item">
+					<div class="" href="">...</div>
+				</li>
+
+			{% endif %}
+		{% endif %}
+
+        {% for num in pages.paginator.page_range %}
+
+            {% if pages.number == num %}
+
+
+            <li class="page-item active">
+                <a class="page-link" href="{% url 'tag_pages' 'tag' tag_slug 'page'  num  %}">{{ num }}</a>
+            </li>
+
+            {% elif num > pages.number|add:'-3' and num < pages.number|add:'3' %}
+
+            <li class="page-item">
+                <a class="page-link" href="{% url 'tag_pages'  'tag' tag_slug 'page'  num  %}">{{ num }}</a>
+            </li>
+
+            {% endif %}
+
+        {% endfor %}
+
+		{% if pages.paginator.page_range|slice:"-1"|last >= 3 %}
+			{% if pages.number == pages.paginator.page_range|last %}
+
+			{% elif pages.number == pages.paginator.page_range|slice:"-1"|last %}
+			{% elif pages.number == pages.paginator.page_range|slice:"-2"|last %}
+
+			{% elif pages.number == pages.paginator.page_range|slice:"-3"|last %}
+
+				<li class="page-item">
+					<a class="page-link" href="{% url 'tag_pages' 'tag' tag_slug 'page'  pages.paginator.page_range|last  %}">{{ pages.paginator.page_range|last }}</a>
+				</li>
+
+			{% else %}
+
+				<li class="page-item">
+					<div class="" href="">...</div>
+				</li>
+
+				<li class="page-item">
+					<a class="page-link" href="{% url 'tag_pages' 'tag' tag_slug 'page'  pages.paginator.page_range|slice:"-2"|last  %}">{{ pages.paginator.page_range|slice:"-1"|last }}</a>
+				</li>
+
+				<li class="page-item">
+					<a class="page-link" href="{% url 'tag_pages' 'tag' tag_slug 'page'  pages.paginator.page_range|last  %}">{{ pages.paginator.page_range|last }}</a>
+				</li>
+
+			{% endif %}
+		{% endif %}
+
+        {% if pages.has_next %}
+
+            <li class="page-item">
+                <a class="page-link" href="{% url 'tag_pages' 'tag' tag_slug 'page'  pages.next_page_number  %}" aria-label="Next">
+                    <span aria-hidden="true">
+                        <i class="fa fa-angle-double-right"></i>
+                    </span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+
+        {% endif %}
+            </ul>
+                            </nav>
+
+
+
+
+
+
+		{% else %}
+
+        {% if pages.has_previous %}
+
+            <li class="page-item">
+                <a class="page-link" href="{% url 'home_pages' 'page'  pages.previous_page_number  %}" tabindex="-1" aria-label="Previous">
+                    <span aria-hidden="true">
+                        <i class="fa fa-angle-double-left"></i>
+                    </span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+
+			{% endif %}
+		{% if pages.paginator.page_range|slice:"-1"|last >= 3 %}
+			{% if pages.number >= pages.paginator.page_range|slice:"4"|last %}
+
+				<li class="page-item">
+					<a class="page-link" href="{% url 'home_pages' 'page'  pages.paginator.page_range|slice:"1"|last  %}">{{ pages.paginator.page_range|slice:"1"|last }}</a>
+				</li>
+
+				<li class="page-item">
+					<div class="" href="">...</div>
+				</li>
+
+			{% endif %}
+		{% endif %}
+
+        {% for num in pages.paginator.page_range %}
+
+            {% if pages.number == num %}
+
+
+            <li class="page-item active">
+                <a class="page-link" href="{% url 'home_pages' 'page'  num  %}">{{ num }}</a>
+            </li>
+
+            {% elif num > pages.number|add:'-3' and num < pages.number|add:'3' %}
+
+            <li class="page-item">
+                <a class="page-link" href="{% url 'home_pages' 'page'  num  %}">{{ num }}</a>
+            </li>
+
+            {% endif %}
+
+        {% endfor %}
+
+		{% if pages.paginator.page_range|slice:"-1"|last >= 3 %}
+			{% if pages.number == pages.paginator.page_range|last %}
+
+			{% elif pages.number == pages.paginator.page_range|slice:"-1"|last %}
+			{% elif pages.number == pages.paginator.page_range|slice:"-2"|last %}
+
+			{% elif pages.number == pages.paginator.page_range|slice:"-3"|last %}
+
+				<li class="page-item">
+					<a class="page-link" href="{% url 'home_pages' 'page'  pages.paginator.page_range|last  %}">{{ pages.paginator.page_range|last }}</a>
+				</li>
+
+			{% else %}
+
+				<li class="page-item">
+					<div class="" href="">...</div>
+				</li>
+
+				<li class="page-item">
+					<a class="page-link" href="{% url 'home_pages' 'page'  pages.paginator.page_range|slice:"-2"|last  %}">{{ pages.paginator.page_range|slice:"-1"|last }}</a>
+				</li>
+
+				<li class="page-item">
+					<a class="page-link" href="{% url 'home_pages' 'page'  pages.paginator.page_range|last  %}">{{ pages.paginator.page_range|last }}</a>
+				</li>
+
+			{% endif %}
+		{% endif %}
+
+        {% if pages.has_next %}
+
+            <li class="page-item">
+                <a class="page-link" href="{% url 'home_pages' 'page'  pages.next_page_number  %}" aria-label="Next">
+                    <span aria-hidden="true">
+                        <i class="fa fa-angle-double-right"></i>
+                    </span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+
+        {% endif %}
+            </ul>
+                            </nav>
+{% endif %}

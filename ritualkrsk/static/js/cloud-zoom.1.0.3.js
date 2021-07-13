@@ -54,7 +54,7 @@
         setTimeout(function () {
             if ($mouseTrap === null) {
                 var w = jWin.width();
-                jWin.parent().append(format('<div style="width:%0px;position:absolute;top:75%;left:%1px;text-align:center" class="cloud-zoom-loading" >Loading...</div>', w / 3, (w / 2) - (w / 6)));
+                jWin.parent().append(format('<div style="width:%0px;position:absolute;top:75%;left:%1px;text-align:center" class="cloud-zoom-loading" ></div>', w / 3, (w / 2) - (w / 6)));
                 $('cloud-zoom-loading', jWin.parent()).css('opacity', 0.5)
             }
         }, 200);

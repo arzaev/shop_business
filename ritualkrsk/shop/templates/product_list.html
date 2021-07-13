@@ -3,16 +3,15 @@
 
 {% block content %}
 <div class="container">
-		<div class="cold-md-6">{% include 'pagination_home.html' %}</div>
 		<div class="row">
 
 		    <div class="col-md-3 left-menu">
 				<div class="">
-					{% for category in categories %}
-					<h3>{{ category.category_name }}</h3>
+					{% for category in view.get_categories %}
+					<h3><a href="{% url 'filter' %}?category={{ category.id }}">{{ category.category_name }}</a></h3>
 					<ul>
 						{% for subcategory in category.productsubcategory_set.all %}
-						<li><a href="">{{ subcategory }}</a></li>
+						<li><a href="{% url 'filter' %}?category={{ category.id }}&subcategory={{ subcategory.id }}">{{ subcategory }}</a></li>
 						{% endfor %}
 					</ul>
 					{% endfor %}
@@ -22,12 +21,12 @@
 		<div class="col-md-9">
 
 		<div class="row">
-		    {% for product in pages %}
+		    {% for product in product_list %}
 			<div class="col-md-4">
 			    <div class="product">
-				    <a href="product.html"><img alt="dress1home" src="{{ product.main_image.url }}" width="200" height="200"></a>
+				    <a href="/{{ product.id }}/"><img alt="dress1home" src="{{ product.main_image.url }}" width="200" height="200"></a>
 					<div class="name">
-				    <a href="product.html">{{ product.name }}</a>
+				    <a href="/{{ product.id }}/">{{ product.name }}</a>
 				    </div>
 				    <div class="price">
 				    <p>{{ product.price }} р</p>
@@ -35,6 +34,11 @@
 				</div>
 			</div>
 			{% endfor %}
+
+			<div class="col-md-12">
+				{% include 'pagination.html' %}
+			</div>
+
 
 
 
@@ -49,4 +53,10 @@
 
 
 	 </div>
+
+
+{% endblock %}
+
+{% block js %}
+
 {% endblock %}

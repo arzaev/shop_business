@@ -1,6 +1,8 @@
 
 from django.db.models import Q
 from django.http import HttpResponse
+from django.views.generic import View
+
 from .models import Product, ProductCategory
 from ritualkrsk import config
 from django.views.generic import ListView, DetailView
@@ -100,3 +102,46 @@ def remove_product_from_cart(request):
         data = json.loads(request.body.decode('utf-8'))
         Cart(request).remove_product(data)
     return HttpResponse()
+
+
+def update_product_in_cart(request):
+    if request.is_ajax():
+        data = json.loads(request.body.decode('utf-8'))
+        Cart(request).update_product(data)
+    return HttpResponse()
+
+
+class CartListView(ListView):
+    model = Product
+    template_name = "cart.html"
+
+    def get_context_data(self, **kwargs):
+        Cart(self.request)
+        context = super().get_context_data(**kwargs)
+
+        cart = cart_html(self.request)
+        context['cart'] = cart[0]
+        context['general_price'] = cart[1]
+
+        context['MD_LIST_PRODUCTS'] = config.MD_LIST_PRODUCTS
+        context['BG_COLOR'] = config.BG_COLOR
+        context['title_shop'] = config.TITLE_SHOP
+        return context
+
+
+class CheckoutListView(ListView):
+    model = Product
+    template_name = "checkout.html"
+
+    def get_context_data(self, **kwargs):
+        Cart(self.request)
+        context = super().get_context_data(**kwargs)
+
+        cart = cart_html(self.request)
+        context['cart'] = cart[0]
+        context['general_price'] = cart[1]
+
+        context['MD_LIST_PRODUCTS'] = config.MD_LIST_PRODUCTS
+        context['BG_COLOR'] = config.BG_COLOR
+        context['title_shop'] = config.TITLE_SHOP
+        return context

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+		<div class="row">
+		    <div class="col-md-12">
+			    <div class="breadcrumbs">
+				    <ul class="breadcrumb shadow p-3 mb-5 bg-white rounded">
+                        <li><a href="{% url 'home' %}">Главная</a> <span class="divider"></span></li>
+                        <li class="active">Корзина</li>
+                    </ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+		    <div class="col-md-12">
+				<h2>Корзина</h2>
+			</div>
+		</div>
+
+		<div class="row ">
+		    <div class="col-md-12 ">
+			<div class="cart-info shadow p-3 mb-5 bg-white rounded">
+				<table class="table ">
+					<thead>
+					    <tr>
+							<th class="image">Изображение</th>
+							<th>Изделие</th>
+							<th>Модель</th>
+							<th>Цена</th>
+							<th>Количество</th>
+							<th class="total">Общая цена</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for pr in cart %}
+						<tr>
+						    <td class="image"><img alt="IMAGE" src="{{ pr.image }}"></td>
+							<td class="name"><a href="product.html">{{ pr.name }}</a></td>
+							<td>..</td>
+							<td>{{ pr.price }} руб.</td>
+							<td class="quantity">
+								<input type="text" size="1" value="{{ pr.count }}" id="newCount{{pr.id}}" name="quantity">
+								<input type="image" title="Update" alt="Update" onclick="updateProductInCart('{{ pr.id}}', '{{ pr.count}}');" src="{% static 'img/update.png' %}">
+								<input type="image" title="Remove" alt="Remove" onclick="removeCart('{{ pr.id }}');" src="{% static 'img/remove.png' %}">
+							</td>
+							<td class="total">{{ pr.total_price }} руб.</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+            </div>
+		    </div>
+		</div>
+
+		<div class="row ">
+
+		    <div class="col-sm-4 col-sm-offset-8 ">
+				<div class="cart-totals shadow p-3 mb-5 bg-white rounded">
+					<table class="table">
+
+					    <tr>
+							<th><span>Общая цена</span></th>
+							<td>{{ general_price }} руб.</td>
+						</tr>
+				</table>
+				<p>
+				<a class="btn btn-primary " href="{% url 'checkout' %}">
+					Оформить заказ
+				</a>
+				</p>
+				</div>
+
+			</div>
+		</div>
+	</div>
+{% endblock content %}
+{% block js %}
+{{block.super}}
+{% endblock js %}

@@ -29,7 +29,6 @@ class Cart(object):
         self.req.session['cart'] = list_products
 
     def remove_product(self, product):
-        print('remove')
         list_products = self.req.session['cart']
         tmp_list = []
         for pr in list_products:
@@ -39,6 +38,18 @@ class Cart(object):
                 tmp_list.append(pr)
         self.req.session['cart'] = tmp_list
 
+    def update_product(self, product):
+        """only update product in cart"""
+        print(product)
+        tmp_list = []
+        list_products = self.req.session['cart']
+
+        for pr in list_products:
+            if pr['id_product'] == product['id_product']:
+                pr['count_product'] = product['new_count']
+            tmp_list.append(pr)
+        self.req.session['cart'] = tmp_list
+
 
 def cart_html(request):
     session_cart = request.session['cart']
@@ -46,6 +57,6 @@ def cart_html(request):
     gen_price = 0
     for pr in session_cart:
         p = Product.objects.get(id=int(pr['id_product']))
-        products.append({'id': p.id, 'name': p.name, 'price': p.price, 'image': p.main_image.url, 'count': pr['count_product']})
+        products.append({'id': p.id, 'name': p.name, 'price': p.price, 'image': p.main_image.url, 'count': pr['count_product'], 'total_price': p.price * int(pr['count_product'])})
         gen_price += p.price
     return [products, gen_price]

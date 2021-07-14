@@ -16,7 +16,7 @@
 	<title>{{ title_shop }}</title>
 </head>
 <body>
-<div class="page-container">
+<div class="page-container" style="background:{{ BG_COLOR}};">
     <div class="header">
 			<nav class="navbar container">
 		
@@ -44,42 +44,34 @@
 
                     <ul class="nav navbar-right cart">
                       <li class="dropdown">
-					<a href="cart.html" class="dropdown-toggle" data-toggle="dropdown"><span></span></a>
+					<a href="cart.html" class="dropdown-toggle" data-toggle="dropdown"><span>{{ cart|length }}</span></a>
 					<div class="cart-info dropdown-menu">
 						<table class="table">
 							<thead>
 							</thead>
 							<tbody>
+								{% for pr in cart %}
 								<tr>
-									<td class="image"><img alt="IMAGE" class="img-responsive" src="products/dress33.jpg"></td>
-									<td class="name"><a href="project.html">Black Dress</a></td>
-									<td class="quantity">x&nbsp;3</td>
-									<td class="total">$130.00</td>
-									<td class="remove"><img src="image/remove-small.png" alt="Remove" title="Remove"></td>											
+									<td class="image"><img alt="IMAGE" class="img-responsive" src="{{ pr.image }}"></td>
+									<td class="name"><a href="/{{ pr.id }}/">{{ pr.name }}</a></td>
+									<td class="quantity">x&nbsp;{{ pr.count }}</td>
+									<td class="total">{{ pr.price }}</td>
+									<td class="remove"><a onclick="removeCart('{{ pr.id }}');" href="">убрать</a></td>
 								</tr>
-								<tr>
-									<td class="image"><img alt="IMAGE" class="img-responsive" src="products/dress11.jpg"></td>
-									<td class="name"><a href="project.html">Blue Dress</a></td>
-									<td class="quantity">x&nbsp;3</td>
-									<td class="total">$230.00</td>
-									<td class="remove"><img src="image/remove-small.png" alt="Remove" title="Remove"></td>											
-								</tr>
+								{% endfor %}
 							</tbody>									
 						</table>
 						<div class="cart-total">
+							<input type="hidden" id="csrf" value="{{ csrf_token }}">
 						  <table>
 							 <tbody>
 								<tr>
-								  <td><b>Sub-Total:</b></td>
-								  <td>$400.00</td>
-								</tr>
-								<tr>
-								  <td><b>Total:</b></td>
-								  <td>$400.00</td>
+								  <td>Общая цена:&nbsp;</td>
+								  <td>{{ general_price }} руб.</td>
 								</tr>
 							</tbody>
 						  </table>
-						  <div class="checkout"><a href="cart.html" class="ajax_right">View Cart</a> | <a href="checkout.html" class="ajax_right">Checkout</a></div>
+						  <div class="checkout"><a href="cart.html" class="ajax_right">Посмотреть корзину</a> | <a href="checkout.html" class="ajax_right">Оформить заказ</a></div>
 						</div>
 					</div> 
 			      </li>
@@ -140,6 +132,7 @@
 <script type="text/javascript" src="{% static 'js/camera.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/sapphire.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/cloud-zoom.1.0.3.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
 <script>
 		$(document).ready( function()
 		{	

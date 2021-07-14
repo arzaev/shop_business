@@ -5,7 +5,7 @@
 <div class="container">
 		<div class="row">
 
-		    <div class="col-md-3 left-menu">
+		    <div class="col-md-3 left-menu shadow p-3 mb-5 bg-white rounded">
 				<div class="">
 					{% for category in view.get_categories %}
 					<h3><a href="{% url 'filter' %}?category={{ category.id }}">{{ category.category_name }}</a></h3>
@@ -20,19 +20,25 @@
 
 		<div class="col-md-9">
 
-		<div class="row">
+		<div class="row ">
 		    {% for product in product_list %}
-			<div class="col-md-4">
-			    <div class="product">
-				    <a href="/{{ product.id }}/"><img alt="dress1home" src="{{ product.main_image.url }}" width="200" height="200"></a>
+			<a href="/{{ product.id }}/">
+			<div class="col-md-{{ MD_LIST_PRODUCTS }} ">
+
+			    <div class="product shadow p-3 mb-5 bg-white rounded">
+					<img alt="dress1home" src="{{ product.main_image.url }}">
 					<div class="name">
-				    <a href="/{{ product.id }}/">{{ product.name }}</a>
+
 				    </div>
+
 				    <div class="price">
-				    <p>{{ product.price }} р</p>
+					<span class="_3J74XsK _3WEsAhb">{{ product.name }} {{ product.short_description }}</span>
+				    <span class="qU9n4CQ">{{ product.price }} р</span>
 				    </div>
 				</div>
+
 			</div>
+				</a>
 			{% endfor %}
 
 			<div class="col-md-12">
@@ -58,5 +64,5 @@
 {% endblock %}
 
 {% block js %}
-
+{{ block.super }}
 {% endblock %}

@@ -36,8 +36,8 @@
 					<ul class="nav navbar-nav">
                       <li class=""><a href="{% url 'home' %}">Главная</a></li>
 					 
-                      <li><a href="" class="ajax_right">Контакты</a></li>
-					  <li><a href="" class="ajax_right">Венки</a></li>
+                      <li><a href="{% url 'contacts' %}" class="ajax_right">Контакты</a></li>
+					  <li><a href="{{SECOND_SITE_URL}}" class="ajax_right">{{SECOND_SITE_NAME}}</a></li>
 <!--					  <li><a href="" class="ajax_right">Статьи</a></li>-->
                     </ul>
 

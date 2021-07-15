@@ -1,5 +1,5 @@
 from django.db import models
-
+from datetime import datetime
 
 class Material(models.Model):
     name = models.CharField(max_length=200)
@@ -47,6 +47,10 @@ class Order(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=100)
     products = models.TextField()
+    checked = models.BooleanField(default=False)
+    code_order = models.CharField(max_length=200)
+    client_ip = models.CharField(max_length=200, default='ip')
+    date = models.DateTimeField(default=datetime.now, blank=True)
 
     def __str__(self):
         return self.name

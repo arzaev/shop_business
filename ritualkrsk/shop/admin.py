@@ -15,7 +15,11 @@ class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductPhotoInline]
 
 
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ("email", "code_order", "date", "checked")
+
+
 admin.site.register(ProductPhoto)
 admin.site.register(Material)
 admin.site.register(Size)
-admin.site.register(Order)
+admin.site.register(Order, OrderAdmin)

@@ -10,11 +10,29 @@
 		    <div class="col-md-12">
 			    <div class="breadcrumbs">
 				    <ul class="breadcrumb shadow p-3 mb-5 bg-white rounded">
-                        <li><a href="{% url 'home' %}">Главная</a> <span class="divider"></span></li>
+                        <li><a href="/">Главная</a> <span class="divider"></span></li>
                         <li class="active">Оформление заказа</li>
                     </ul>
 				</div>
 			</div>
+		</div>
+        <b style="font-size: 30px;">Ваш заказ принят!</b><br><br>
+
+        <div class="row ">
+		    <div class="col-md-12 ">
+			    <div class="your_order ">
+
+                    <div class="shadow p-3 mb-5 bg-white rounded">
+						<div class="table table-bordered table-responsive ">
+                        <h4>Номер заказа: {{code_order}}</h4><br>
+                        <p>В ближайшее время наш менеджер с Вами свяжется для подтверждения заказа. Ожидайте звонка.</p>
+					    </div>
+                      </div>
+
+
+		        </div>
+
+		    </div>
 		</div>
 
 		<div class="row ">
@@ -55,31 +73,11 @@
 
 		    </div>
 		</div>
-		<form class="form-horizontal" role="form" action="{% url 'checkout' %}" method="post">
-			{% csrf_token %}
-		<div class="row box shadow p-3 mb-5 bg-white rounded">
-		    <div class="col-md-6">
-							{% for field in form %}
-        					<div class="form-group">
-            				{{ field.errors }}
-            				{{ field.label_tag }} {{ field }}
-        					</div>
-    						{% endfor %}
-			</div>
-		</div>
 
-		<div class="row ">
-		    <div class="col-md-12 ">
-			    <div class="your_order ">
-					<p>
-                                    <button class="btn btn-primary" type="submit">Заказать</button>
-                                </p>
-				</div>
-			</div>
-		</div>
+        <h4>Остались вопросы?</h4>
+        <p>Задайте вопрос, и наши операторы свяжутся с вами в ближайшее время</p>
+        <a href="{% url 'contacts' %}"><button class="btn btn-primary" type="button">Задать вопрос</button></a>
 
-
-	</form>
 </div>
 
 {% endblock content %}

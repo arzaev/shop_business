@@ -1,15 +1,27 @@
-import decimal
 
-from django.db.models import Q
 from django.http import HttpResponse
-from django.views.generic import View
+from django.shortcuts import render
 
 from .models import Product, Material, Size
 from ritualkrsk import config
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, FormView
 import json
 from .cart import Cart, cart_html
-from decimal import Decimal as D
+from .forms import OrderForm
+
+
+def main_context(context, request):
+    Cart(request)
+    cart = cart_html(request)
+    context['cart'] = cart[0]
+    context['general_price'] = cart[1]
+
+    context['MD_LIST_PRODUCTS'] = config.MD_LIST_PRODUCTS
+    context['BG_COLOR'] = config.BG_COLOR
+    context['title_shop'] = config.TITLE_SHOP
+    context['SECOND_SITE_NAME'] = config.SECOND_SITE_NAME
+    context['SECOND_SITE_URL'] = config.SECOND_SITE_URL
+    return context
 
 
 class MaterialSizePrice:
@@ -31,15 +43,7 @@ class ProductListView(MaterialSizePrice, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        Cart(self.request)
-        cart = cart_html(self.request)
-        context['cart'] = cart[0]
-        context['general_price'] = cart[1]
-
-        context['MD_LIST_PRODUCTS'] = config.MD_LIST_PRODUCTS
-        context['BG_COLOR'] = config.BG_COLOR
-        context['title_shop'] = config.TITLE_SHOP
+        context = main_context(context, self.request)
         return context
 
 
@@ -106,13 +110,7 @@ class FilterProductListView(MaterialSizePrice, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['MD_LIST_PRODUCTS'] = config.MD_LIST_PRODUCTS
-        context['BG_COLOR'] = config.BG_COLOR
-        context['title_shop'] = config.TITLE_SHOP
-
-        cart = cart_html(self.request)
-        context['cart'] = cart[0]
-        context['general_price'] = cart[1]
+        context = main_context(context, self.request)
 
         context["material"] = ''.join([f"material={x}&" for x in self.request.GET.getlist("material")])
         context["size"] = ''.join([f"size={x}&" for x in self.request.GET.getlist("size")])
@@ -136,13 +134,7 @@ class ProductDetailView(MaterialSizePrice, DetailView):
         Cart(self.request)
         context = super().get_context_data(**kwargs)
 
-        cart = cart_html(self.request)
-        context['cart'] = cart[0]
-        context['general_price'] = cart[1]
-
-        context['MD_LIST_PRODUCTS'] = config.MD_LIST_PRODUCTS
-        context['BG_COLOR'] = config.BG_COLOR
-        context['title_shop'] = config.TITLE_SHOP
+        context = main_context(context, self.request)
 
         pr = Product.objects.get(id=self.kwargs.get('pk'))
 
@@ -181,29 +173,55 @@ class CartListView(ListView):
         Cart(self.request)
         context = super().get_context_data(**kwargs)
 
-        cart = cart_html(self.request)
-        context['cart'] = cart[0]
-        context['general_price'] = cart[1]
-
-        context['MD_LIST_PRODUCTS'] = config.MD_LIST_PRODUCTS
-        context['BG_COLOR'] = config.BG_COLOR
-        context['title_shop'] = config.TITLE_SHOP
+        context = main_context(context, self.request)
         return context
 
 
-class CheckoutListView(ListView):
-    model = Product
-    template_name = "checkout.html"
+def get_data_cart(request):
+    list_cart = request.session['cart']
+    new_list = []
+    for i in list_cart:
+        data = Product.objects.get(id=int(i['id_product'])).name
+        new_list.append("Продукт: {} | Количество: {}".format(data, i['count_product']))
+    return new_list
 
-    def get_context_data(self, **kwargs):
-        Cart(self.request)
-        context = super().get_context_data(**kwargs)
 
-        cart = cart_html(self.request)
-        context['cart'] = cart[0]
-        context['general_price'] = cart[1]
+def checkout(request):
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            data_products = "\n".join(get_data_cart(request))
+            instance.products = data_products
+            import uuid
+            code_order = 'A' + '-' + str(uuid.uuid4()).split('-')[0]
+            instance.code_order = code_order
+            instance.client_ip = request.META['REMOTE_ADDR']
+            instance.save()
 
-        context['MD_LIST_PRODUCTS'] = config.MD_LIST_PRODUCTS
-        context['BG_COLOR'] = config.BG_COLOR
-        context['title_shop'] = config.TITLE_SHOP
-        return context
+
+            context = {}
+            context = main_context(context, request)
+            context['form'] = form
+            request.session['cart'] = []
+            return render(request, 'order_done.html', context=context)
+    else:
+        form = OrderForm()
+        context = {}
+        context = main_context(context, request)
+        context['form'] = form
+        return render(request, 'checkout.html', context=context)
+
+
+def contacts(request):
+    context = {}
+    context = main_context(context, request)
+    context['BUISNESS_COMPANY_NAME'] = config.BUISNESS_COMPANY_NAME
+
+    context['BUISNESS_HOST_NAME'] = config.BUISNESS_HOST_NAME
+    context['BUISNESS_EMAIL'] = config.BUISNESS_EMAIL
+    context['BUISNESS_ADDRESS'] = config.BUISNESS_ADDRESS
+    context['MAP_YANDEX_CODE'] = config.MAP_YANDEX_CODE
+    context['BUISNESS_PHONE'] = config.BUISNESS_PHONE
+
+    return render(request, 'contacts.html', context=context)

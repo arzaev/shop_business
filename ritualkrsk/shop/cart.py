@@ -58,5 +58,5 @@ def cart_html(request):
     for pr in session_cart:
         p = Product.objects.get(id=int(pr['id_product']))
         products.append({'id': p.id, 'name': p.name, 'price': p.price, 'image': p.main_image.url, 'count': pr['count_product'], 'total_price': p.price * int(pr['count_product'])})
-        gen_price += p.price
+        gen_price += p.price * int(pr['count_product'])
     return [products, gen_price]

@@ -1,8 +1,89 @@
-
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
+
 <div class="container">
 
+		<div class="row">
+		    <div class="col-md-12">
+			    <div class="breadcrumbs">
+				    <ul class="breadcrumb shadow p-3 mb-5 bg-white rounded">
+                        <li><a href="/">Главная</a> <span class="divider"></span></li>
+                        <li class="active">Контакты</li>
+                    </ul>
+				</div>
+			</div>
+		</div>
+
+	<div class="row ">
+		    <div class="col-md-12 ">
+			    <div class="location shadow p-3 mb-5 bg-white rounded">
+
+					<div class="find-widget">
+                 Организация:  <a href="#">{{BUISNESS_COMPANY_NAME}}</a>
+                </div>
+                <div class="find-widget">
+                 Адрес: <a href="#">{{BUISNESS_ADDRESS}}</a>
+                </div>
+                <div class="find-widget">
+                  Телефон:  <a href="#">{{BUISNESS_PHONE}}</a>
+                </div>
+					<div class="find-widget">
+                  Email:  <a href="#">{{BUISNESS_EMAIL}}</a>
+                </div>
+					</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<h2>Обратная связь</h2>
+			</div>
+				<div class="col-md-12">
+					<div class="contact_form shadow p-3 mb-5 bg-white rounded">
+						<form>
+							<fieldset class="form-group">
+								<label>Имя<span class="required">*</span></label>
+								<input type="text" placeholder="" class="form-control">
+								<label>Email<span class="required">*</span></label>
+								<input type="text" placeholder="" class="form-control">
+								<label>Телефон<span class="required">*</span></label>
+								<input type="text" placeholder="" class="form-control">
+							</fieldset>
+						</form>
+						<div class="form-group">
+							<label>Сообщение<span class="required">*</span></label>
+							<textarea rows="3" class="form-control"></textarea>
+						</div>
+						<p class="form-group">
+							<button class="btn btn-primary" type="button">Отправить</button>
+						</p>
+					</div>
+				</div>
+
+			</div>
+
+
+		<div class="row">
+		    <div class="col-md-12">
+				<h2>Наше местоположение</h2>
+			</div>
+		</div>
+        <div class="row">
+		    <div class="col-md-12">
+			    <div id="map ">
+					{{MAP_YANDEX_CODE|safe}}
+                </div>
+			</div>
+		</div>
+	<br>
+
+
+
+
 	</div>
-{% endblock %}
+
+{% endblock content %}
+{% block js %}
+{{block.super}}
+{% endblock js %}

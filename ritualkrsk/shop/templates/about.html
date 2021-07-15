@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+			<div class="row">
+		    <div class="col-md-12">
+			    <div class="breadcrumbs">
+				    <ul class="breadcrumb shadow p-3 mb-5 bg-white rounded">
+                        <li><a href="/">Главная</a> <span class="divider"></span></li>
+                        <li class="active">О нас</li>
+                    </ul>
+				</div>
+			</div>
+		</div>
+
+		    <h2>О нас</h2>
+
+      <div class="row ">
+		    <div class="col-md-12">
+					<p class="text_about">{{ABOUT}}</p>
+			</div>
+		</div>
+
+   </div>
+
+{% endblock content %}
+{% block js %}
+{{block.super}}
+{% endblock js %}

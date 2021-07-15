@@ -14,22 +14,22 @@
 				</div>
 			</div>
 		</div>
-
+		<input type="hidden" id="csrf" value="{{ csrf_token }}">
 	<div class="row ">
 		    <div class="col-md-12 ">
 			    <div class="location shadow p-3 mb-5 bg-white rounded">
 
 					<div class="find-widget">
-                 Организация:  <a href="#">{{BUISNESS_COMPANY_NAME}}</a>
+                 <span style="font-size: 10px">Организация:</span>  <span>{{BUISNESS_COMPANY_NAME}}</span>
                 </div>
                 <div class="find-widget">
-                 Адрес: <a href="#">{{BUISNESS_ADDRESS}}</a>
+                 <span style="font-size: 10px">Адрес:</span> <span>{{BUISNESS_ADDRESS}}</span>
                 </div>
                 <div class="find-widget">
-                  Телефон:  <a href="#">{{BUISNESS_PHONE}}</a>
+                  <span style="font-size: 10px">Телефон:</span>  <span>{{BUISNESS_PHONE}}</span>
                 </div>
 					<div class="find-widget">
-                  Email:  <a href="#">{{BUISNESS_EMAIL}}</a>
+                  <span style="font-size: 10px">Email:</span>  <span>{{BUISNESS_EMAIL}}</span>
                 </div>
 					</div>
 			</div>
@@ -44,19 +44,19 @@
 						<form>
 							<fieldset class="form-group">
 								<label>Имя<span class="required">*</span></label>
-								<input type="text" placeholder="" class="form-control">
+								<input type="text" placeholder="" class="form-control" id="nameForm">
 								<label>Email<span class="required">*</span></label>
-								<input type="text" placeholder="" class="form-control">
+								<input type="text" placeholder="" class="form-control" id="emailForm">
 								<label>Телефон<span class="required">*</span></label>
-								<input type="text" placeholder="" class="form-control">
+								<input type="text" placeholder="" class="form-control" id="phoneForm">
 							</fieldset>
 						</form>
 						<div class="form-group">
 							<label>Сообщение<span class="required">*</span></label>
-							<textarea rows="3" class="form-control"></textarea>
+							<textarea rows="3" class="form-control" id="messageForm"></textarea>
 						</div>
 						<p class="form-group">
-							<button class="btn btn-primary" type="button">Отправить</button>
+							<button class="btn btn-primary" type="button" onclick="askQuestion();">Отправить</button>
 						</p>
 					</div>
 				</div>
@@ -86,4 +86,5 @@
 {% endblock content %}
 {% block js %}
 {{block.super}}
+<script type="text/javascript" src="{% static 'js/contacts.js' %}"></script>
 {% endblock js %}

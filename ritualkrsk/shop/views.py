@@ -2,9 +2,9 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from .models import Product, Material, Size
+from .models import Product, Material, Size, Question
 from ritualkrsk import config
-from django.views.generic import ListView, DetailView, FormView
+from django.views.generic import ListView, DetailView
 import json
 from .cart import Cart, cart_html
 from .forms import OrderForm
@@ -225,3 +225,19 @@ def contacts(request):
     context['BUISNESS_PHONE'] = config.BUISNESS_PHONE
 
     return render(request, 'contacts.html', context=context)
+
+
+def about(request):
+    context = {}
+    context = main_context(context, request)
+    context['ABOUT'] = config.ABOUT_US
+    return render(request, 'about.html', context=context)
+
+
+def question(request):
+    if request.is_ajax():
+        data = json.loads(request.body.decode('utf-8'))
+        question = Question(name=data['name'], email=data['email'], phone=data['phone'],
+                            message=data['message'], client_ip=request.META['REMOTE_ADDR'])
+        question.save()
+        return HttpResponse({})

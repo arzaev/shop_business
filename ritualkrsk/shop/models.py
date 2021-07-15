@@ -56,3 +56,14 @@ class Order(models.Model):
         return self.name
 
 
+class Question(models.Model):
+    name = models.CharField(max_length=200)
+    email = models.EmailField()
+    phone = models.CharField(max_length=100)
+    message = models.TextField()
+    checked = models.BooleanField(default=False)
+    client_ip = models.CharField(max_length=200, default='ip')
+    date = models.DateTimeField(default=datetime.now, blank=True)
+
+    def __str__(self):
+        return self.name

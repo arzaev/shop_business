@@ -6,17 +6,60 @@
 		<div class="row">
 
 		    <div class="col-md-3 left-menu shadow p-3 mb-5 bg-white rounded">
+
 				<div class="">
-					{% for category in view.get_categories %}
-					<h3><a href="{% url 'filter' %}?category={{ category.id }}">{{ category.category_name }}</a></h3>
-					<ul>
-						{% for subcategory in category.productsubcategory_set.all %}
-						<li><a href="{% url 'filter' %}?category={{ category.id }}&subcategory={{ subcategory.id }}">{{ subcategory }}</a></li>
-						{% endfor %}
-					</ul>
+					<form action="{% url 'filter' %}">
+					<h3>Материал</h3>
+					{% for mat in view.get_material %}
+					<div class="form-check">
+						{% if mat.id|stringformat:"i" in list_mat %}
+  						<input class="form-check-input" type="checkbox" value="{{ mat.id }}" id="flexCheckDefault{{mat.id}}" name="material" checked>
+						{% else %}
+						<input class="form-check-input" type="checkbox" value="{{ mat.id }}" id="flexCheckDefault{{mat.id}}" name="material">
+						{% endif %}
+  						<label class="form-check-label" for="flexCheckDefault{{mat.id}}">
+							{{mat.name}}
+
+  						</label>
+					</div>
 					{% endfor %}
+
+					<h3>Размер</h3>
+
+					{% for size in view.get_size %}
+					<div class="form-check">
+						{% if size.id|stringformat:"i" in list_size %}
+  					<input class="form-check-input" type="checkbox" value="{{size.id}}" id="flexCheckDefault3{{size.id}}" name="size" checked>
+						{% else %}
+						<input class="form-check-input" type="checkbox" value="{{size.id}}" id="flexCheckDefault3{{size.id}}" name="size">
+						{% endif %}
+  					<label class="form-check-label" for="flexCheckDefault3{{size.id}}">
+						{{size.size}}
+  					</label>
+					</div>
+					{% endfor %}
+
+					<h3>Цена</h3>
+					<div class="form-check">
+  					<div class="range">
+									<span>
+										<input class="" type="text" name="min_filter_price" id="min_filter_price" placeholder="от" value="{{price1}}" size="5">
+									</span>
+
+									<span><input class="" type="text" name="max_filter_price" id="max_filter_price" placeholder="до" value="{{price2}}" size="5" >
+									</span>
+								</div>
+					</div>
+
+						<br>
+					<button class="btn btn-my1" type="submit">Применить</button>
+
+						</form>
+					<a href="{% url 'home' %}"><button class="btn btn-my2" type="button">Сбросить</button></a>
 				</div>
+
 			</div>
+
 
 		<div class="col-md-9">
 
@@ -26,14 +69,14 @@
 			<div class="col-md-{{ MD_LIST_PRODUCTS }} ">
 
 			    <div class="product shadow p-3 mb-5 bg-white rounded">
-					<img alt="dress1home" src="{{ product.main_image.url }}">
+					<img alt="dress1home" src="{{ product.main_image.url }}" width="200" height="200">
 					<div class="name">
 
 				    </div>
 
 				    <div class="price">
 					<span class="_3J74XsK _3WEsAhb">{{ product.name }} {{ product.short_description }}</span>
-				    <span class="qU9n4CQ">{{ product.price }} р</span>
+				    <span class="qU9n4CQ">{{ product.price }} руб.</span>
 				    </div>
 				</div>
 
@@ -44,12 +87,6 @@
 			<div class="col-md-12">
 				{% include 'pagination.html' %}
 			</div>
-
-
-
-
-
-
 
 		</div>
 

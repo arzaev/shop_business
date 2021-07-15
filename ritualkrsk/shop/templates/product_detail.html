@@ -48,14 +48,14 @@
 						<div class="tab-pane" id="profile">
 							<table class="table specs">
 							    <tr>
-								    <th>Цвет</th>
+								    <th>Материал</th>
 								    <th>Размер</th>
 								    <th>Высота</th>
 							    </tr>
 							    <tr>
-								    <td>Blue</td>
-								    <td>XS</td>
-								    <td>1.00</td>
+								    <td>{{product.material.name}}</td>
+								    <td>{{product.size.size}}</td>
+								    <td></td>
 							    </tr>
 					        </table>
 						</div>
@@ -87,70 +87,26 @@
 
 		<div class="row">
 		<div class="col-md-12">
-		    <div class="col-md-3">
-			    <div class="product">
-					<div class="product_sale">Sale</div>
-				    <a href="product.html"><img alt="dress1home" src="products/dress1home.jpg"></a>
+
+			{% for pr in similarProducts %}
+		    <a href="/{{ pr.id }}/">
+			<div class="col-md-3">
+
+			    <div class="product shadow p-3 mb-5 bg-white rounded">
+					<img alt="dress1home" src="{{ pr.main_image.url }}" width="200" height="200">
 					<div class="name">
-				    <a href="">Elegant Dress</a>
-				    </div>
-				    <div class="price">
-				    <p>$200.00</p>
-				    </div>
-				</div>
-			</div>
-		    <div class="col-md-3">
-			    <div class="product">
-				    <a href="product.html"><img alt="dres2" src="products/dress5home.jpg"></a>
-				    <div class="name">
-				    <a href="">Lace Dress</a>
-				    </div>
-				    <div class="price">
-				    <p>$250.00</p>
+
 				    </div>
 
+				    <div class="price">
+					<span class="_3J74XsK _3WEsAhb">{{ pr.name }} {{ pr.short_description }}</span>
+				    <span class="qU9n4CQ">{{ pr.price }} р</span>
+				    </div>
 				</div>
 
 			</div>
-		    <div class="col-md-3">
-			    <div class="product">
-				    <a href="product.html"><img alt="dress3" src="products/dress6home.jpg"></a>
-					<div class="name">
-				    <a href="">Floral Dress</a>
-				    </div>
-				    <div class="price">
-				    <p>$500.00</p>
-				    </div>
-				</div>
-			</div>
-
-
-		    <div class="col-md-3">
-			    <div class="product">
-				    <a href="product.html"><img alt="dress4" src="products/dress2home.jpg"></a>
-				    <div class="name">
-				    <a href="">Black Dress</a>
-				    </div>
-				    <div class="price">
-				    <p>$150.00</p>
-				    </div>
-
-				</div>
-			</div>
-
-
-		    <div class="col-md-3">
-			    <div class="product">
-				    <a href="product.html"><img alt="dress6" src="products/dress4home.jpg"></a>
-				    <div class="name">
-				    <a href="">White Dress</a>
-				    </div>
-				    <div class="price">
-				    <p>$120.00</p>
-				    </div>
-
-				</div>
-			</div>
+				</a>
+		    {% endfor %}
 
 		</div>
 		</div>

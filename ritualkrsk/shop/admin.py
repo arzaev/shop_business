@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, ProductCategory, ProductSubCategory, ProductPhoto
+from .models import Product, ProductPhoto, Material, Size, Order
 from ritualkrsk import config
 
 admin.site.site_header = "Shop admin"
@@ -12,10 +12,10 @@ class ProductPhotoInline(admin.StackedInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_filter = ("subcategories", )
     inlines = [ProductPhotoInline]
 
 
-admin.site.register(ProductCategory)
-admin.site.register(ProductSubCategory)
 admin.site.register(ProductPhoto)
+admin.site.register(Material)
+admin.site.register(Size)
+admin.site.register(Order)
